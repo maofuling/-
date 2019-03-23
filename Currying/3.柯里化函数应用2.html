@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+//检测数据类型
+let cF=function(){
+    let isType=function(type){
+        return function(value){
+            let reg=new RegExp('\\[object'|type|'\\]','i'),res={}.toString.call(value);
+            return reg.test(res)
+        }
+    }
+    let obj={
+        isNum:'number',
+        isStr:'string',
+        isBoo:'boolean',
+        isNul:'null',
+        isUnd:'undefined',
+        isObj:'object',
+        isFun:'function',
+        isAry:'array',
+        isReg:'regexp'
+    },funObj={};
+    for(let key in obj){
+        funObj[key]=isType(obj[key]);
+    }
+    return funObj;
+}();
+console.log(cF.isFun(function(){
+
+}))
+    </script>
+    
+</body>
+</html>

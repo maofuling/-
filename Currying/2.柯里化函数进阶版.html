@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div1">ali</div>
+    <script>
+        //绑定事件，处理this关键字
+       function  bind(fn,context){
+           let args=[].slice.call(arguments,2);
+           return function(){
+               let innerArgs=[].slice.call(arguments,0);//innerArgs
+            指的是默认传递进来的事件是e
+               let finalArgs=args.concat(innerArgs);
+               return fn.apply(context,finalArgs);
+           }
+       }
+
+       let oDiv=document.getElementById('div1');
+       let obj={name:'ali'};
+       function fn(e,num){
+           console.log(e);
+           console.log(num);
+       }
+       oDiv.addEventListener('click',bind(fn,obj,100),false);
+    </script>
+</body>
+</html>

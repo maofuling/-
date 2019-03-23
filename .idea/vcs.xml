@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ajax" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lazyLoad" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sowing_map" vcs="Git" />
   </component>
 </project>

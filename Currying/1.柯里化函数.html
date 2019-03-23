@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='div1'> 阿狸</div>
+    <script>
+        //符合下面的结构基本为柯里化函数
+    // function  Fn(){//Fn()形成不销毁的作用域
+    //     return function(){
+
+   //      }
+    // }
+    // let f1=Fn();
+    // let  f2=Fn();
+function  processThis(obj,fn){
+    return function(){
+     let  ary=[].slice.call(arguments,0);//类数组转为数组
+        fn.apply(obj,ary);
+    }
+}   
+let oDiv=document.getElementById('div1');
+let obj={name:'阿里'};
+function fn(e){
+     console.log(e);
+}
+oDiv.addEventListener('click',processThis(obj,fn),false);
+
+//window.setTimeout(processThis(obj,fn), 1000);//
+//window.setTimeout(function(){},1000);
+
+//window.setTimeout(fn.call(obj),1000);不是1秒之后执行，是在绑定obj立即执行
+
+
+    </script>
+</body>
+</html>

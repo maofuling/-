@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios</title>
+</head>
+<body>
+<script src="node_modules/axios/dist/axios.min.js"></script>
+<script>
+     //初始化常用配置项
+    axios.default.baseURL='https://www.easy-mock.com/mock/5b0412beda8a195fb0978627/temp';
+    axios.interceptors.response.use(result=>result.data);
+    axios.defaults.validateSatatus=status=>/^(2|3)\d{2}$/.test(status);
+    //设置在post请求中基于请求主体向服务器发送内容的格式，默认是raw，项目里常用的是url-encoded格式
+     axios.defaults.headers['Content-Type'] = 'appliction/x-www-form-urlencoded';
+    axios.defaults.transformRequest=data=>{
+        //data:是请求主体中需要传递给服务器的内容（对象）；
+        let  str='';
+        for(let attr  in data){
+              if(data.hasOwnProperty(attr)){//说明data由attr属性
+                  str += '${attr}=${data[attr]}&';
+              }
+        }
+        return str.substring(0,str.length-1);
+    }
+
+
+    axios.defaults.validateStatus=function validateStatus(status){
+        //自定义成功失败规则：resolve/reject(默认以二开头的为成功)
+        //return /^(2|3)\d{2}$/.test(status);
+    }
+
+    axios.interceptors.response.use(function success(result){
+        return result.data;
+    },function error(){
+
+    })//设置响应拦截器：分别在响应成功和失败时做成拦截处理（在执行成功后设定的方法之前，先会执行拦截器中的方法
+    axios.defaults.timeout=3000;
+    axios.defaults.headers={
+        //自定义请求头
+    }
+    axios.defaults.params={};//get传参
+    axios.defaults.data={};//post传参
+
+    //使用
+    axios.get('/list',{
+        params:{
+            lcz:12
+        },
+        headers:{xx:'xx'}
+    }).then(result=>{
+        console.log(result);
+        //result.headers:服务器返回的响应头信息
+    });
+    //post:三个参数，axios.post(url[,data][,config])
+    axios.post('/add',{
+        lcz:12,
+        sex:1
+    }).then(result=>{
+        console.log(result);
+    })
+</script>
+</body>
+</html>

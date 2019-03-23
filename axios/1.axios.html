@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios</title>
+</head>
+<body>
+<script>
+    let  result=null;
+    axios.get('A').then(resultA=>{
+         result=resultA;
+         return axios.get('B');
+    }).then(resultB=>{
+        //A和B都成功执行：resultB是B成功的结果
+        //全局result是A的结果
+    });
+    //sendAry存放三个ajax请求的promise实例
+    let sendAry=[
+        axios.get('https://www.easy-mock.com/mock/5b0412beda8a195fb0978627/temp/list'),
+        axios.get('https://www.easy-mock.com/mock/5b0412beda8a195fb0978627/temp/info'),
+        axios.post('https://www.easy-mock.com/mock/5b0412beda8a195fb0978627/temp/add')];
+    //三个请求都完成才做事情(可以基于All实现)
+    axios.all(sendAry).then(result=>{
+         console.log(result);//是一个数组，分别存储每一个请求的结果
+        let [resA,resB,resC]=result;
+    });
+    module.expoers=function spread(callback){
+        return function wrap(arr){
+            return callback.apply(null,arr);
+        };
+    };
+    let wrap=axios.spread(()=>{
+
+    });
+    xios.all(sendAry).then(axios.spread((resA,resB,rresC)=>{
+        //=>RES-A/-B/-C分别代表三次请求的结果
+        //=>原理是JS中的柯理化函数
+    }));
+</script>
+</body>
+</html>

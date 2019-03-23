@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //初始默认的配置项
+    axios.defaults.baseURL ='https://www.easy-mock.com/mock/5b0412beda8a195fb0978627/temp';
+    axios.interceptors.response.use(result=>{
+        //设置响应拦截器，在ajax请求成功，执行对应方法之前，把从服务器获取的result（包含响应主体和响应头信息等）中的data获取到，然后返回，这样在请求成功的函数中，再次遇到的result只有响应主体内容
+        return result['data'];
+    });
+
+    axios.default.transformRequest=data=>{
+         //post|put等请求中，基于请求主体传递给服务器的内容（对象），一般都会把他转换为X-WWW-FORM-URLENCODED格式的字符串传递给服务器
+        //>yarn add qs：安装QS插件实现把对象转换为URLENCODED格式的字符串（可以实现互逆的需求）
+        return Qs.stringify(data);
+    };
+    axios.defaults.validateSatatus=status=>{
+          return /^(2|3)\d{2}$/.test(status);
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp</title>
+</head>
+<body>
+<script >
+    function jsonp({url,params,cb}){
+        return  new Promise((resolve,reject)=>{
+
+            let script=document.createElement('script');//创建一个script标签
+             window[cb]=function(data){//声明全局函数
+                  resolve(data);//不能默认执行，需要创建script标签
+                 document.body.removeChild(script);
+             };
+             params={...params,cb};//wd=b&cb=show的格式，此处是防止params过多
+            let arrs=[];//序列化数据
+
+            //发送请求
+            for(let key  in params){
+                arrs.push('${key=${params[key]}');
+            }
+            script.src="${url}?${arrs.join('&')}";
+            document.body.appendChild(script);
+        })
+    }
+    //只能发送get请求
+//不安全 xss攻击
+         jsonp({
+             url :'http://localhost:3000/say',
+         params:{wd:' you'},
+         cb:'show'
+         }).then(data=>{//then表示成功后
+             console.log(data);
+         })
+</script>
+</body>
+</html>

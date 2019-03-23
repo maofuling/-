@@ -1,0 +1,22 @@
+#  同源策略
+##  <font color="green"> 含义</font>
+即协议，端口，域名。当三者完全一致时，属于同源，缺一不可。同源策略是浏览器的安全功能,以确保用户信息安全，防止恶意网站切取数据，不同源的客户脚本在没有明确授权的情况下，没有权限读取对方资源。
+##   <font color="green"> 特例</font>
+1. 
+##  为什么浏览器不支持跨域
+> 针对两方面：一是针对接口的请求，二是针对Dom的查询
+1. cookie LocalStorage
+
+2. DOM元素有同源策略，iframe
+
+3. ajax不支持跨域
+## 实现跨域
+1.  jsonp
+2. cors
+3. postMessage
+4. document.domain
+5. window.name
+6. location.hash
+7. http-proxy
+8. nginx
+9. websocket
